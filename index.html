@@ -14,6 +14,21 @@
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+    
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+    
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('chat message', input.value);
+          input.value = '';
+        }
+      });
+    </script>
   </head>
   <body>
     <ul id="messages"></ul>
