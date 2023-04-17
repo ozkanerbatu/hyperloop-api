@@ -6,6 +6,29 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
+
+  socket.on("_levitasyonSicakligi",(data)=>{
+    socket.emit("levitasyonSicakligi",data)
+  })
+  socket.on("_ortamSıcaklığı",(data)=>{
+    socket.emit("ortamSıcaklığı",data)
+  })
+  socket.on("_itkiSıcaklığı",(data)=>{
+    socket.emit("itkiSıcaklığı",data)
+  })
+  socket.on("_levitasyonBatarya",(data)=>{
+    socket.emit("levitasyonBatarya",data)
+  })
+  socket.on("_motorSürücüBatarya",(data)=>{
+    socket.emit("_motorSürücüBatarya",data)
+  })
+  socket.on("_electronicBatarya",(data)=>{
+    socket.emit("electronicBatarya",data)
+  })
+  socket.on("_itkiBatarya",(data)=>{
+    socket.emit("itkiBatarya",data)
+  })
+  
   socket.emit("my_message", "Hello from server");
   socket.emit("batter1",{id:1,value:0.5})
   socket.emit("velocity",{id:1,value:{
