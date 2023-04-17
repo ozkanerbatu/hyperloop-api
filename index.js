@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
-
+  socket.emit("levitasyonBatarya",80)
   socket.on("_levitasyonSicakligi",(data)=>{
     socket.emit("levitasyonSicakligi",data)
   })
