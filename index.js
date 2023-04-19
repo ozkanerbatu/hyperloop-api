@@ -20,7 +20,7 @@ io.on("connection", (socket) => {
     socket.emit("levitasyonBatarya",data)
   })
   socket.on("_motorSürücüBatarya",(data)=>{
-    socket.emit("_motorSürücüBatarya",data)
+    socket.emit("motorSürücüBatarya",data)
   })
   socket.on("_electronicBatarya",(data)=>{
     socket.emit("electronicBatarya",data)
@@ -29,8 +29,6 @@ io.on("connection", (socket) => {
     socket.emit("itkiBatarya",data)
   })
   
-  socket.emit("my_message", "Hello from server");
-  socket.emit("batter1",{id:1,value:0.5})
   socket.emit("velocity",{id:1,value:{
     x:0.5,
     y:0.5,
