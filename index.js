@@ -22,8 +22,7 @@ io.on("connection", (socket) => {
    console.log("levitasyon batarya",data);
     socket.emit("levitasyonBatarya",data)
   })
-  socket.on("b1",(data)=>{
-   socket.emit("motorSürücüBatarya",data)
+  socket.on("_motorSürücüBatarya",(data)=>{
     socket.emit("_motorSürücüBatarya",data)
   })
   socket.on("b3",(data)=>{
