@@ -4,48 +4,50 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+let client_id=""
 io.on("connection", (socket) => {
-  console.log("a user connected", socket.id);
   socket.emit("connected", socket.id);
+  socket.on("client_id", (data) => {
+    client_id=data
+  });
   socket.on("lbs",(data)=>{
-    socket.emit("levitasyonSıcaklığı",data)
+    io.to(client_id).emit("levitasyonSıcaklığı",data)
   })
   socket.on("os",(data)=>{
-    socket.emit("ortamSıcaklığı",data)
+    io.to(client_id).emit("ortamSıcaklığı",data)
   })
   socket.on("ims",(data)=>{
-    socket.emit("itkiSıcaklığı",data)
+    io.to(client_id).emit("itkiSıcaklığı",data)
   })
   socket.on("b2",(data)=>{
-    socket.emit("levitasyonBatarya",data)
+    io.to(client_id).emit("levitasyonBatarya",data)
   })
   socket.on("b1",(data)=>{
-    socket.emit("_motorSürücüBatarya",data)
+    io.to(client_id).emit("_motorSürücüBatarya",data)
   })
   socket.on("b3",(data)=>{
-    socket.emit("electronicBatarya",data)
+    io.to(client_id).emit("electronicBatarya",data)
   })
   socket.on("b4",(data)=>{
-    socket.emit("ssss",data)
+    io.to(client_id).emit("ssss",data)
   })
   socket.on("ld",(data)=>{
-    socket.emit("lidar",data)
+    io.to(client_id).emit("lidar",data)
   })
   socket.on("kr",(data)=>{
-    socket.emit("renkSensoru",data)
+    io.to(client_id).emit("renkSensoru",data)
   })
   socket.on("gx",(data)=>{
-    socket.emit("gx",data)
+    io.to(client_id).emit("gx",data)
   })
   socket.on("gy",(data)=>{
-    socket.emit("gy",data)
+    io.to(client_id).emit("gy",data)
   })
   socket.on("gz",(data)=>{
-    socket.emit("gz",data)
+    io.to(client_id).emit("gz",data)
   })
   socket.on("rpm",(data)=>{
-    console.log("rpm",data);
-    socket.emit("hiz","data")
+    io.to(client_id).emit("hiz",data)
   })
 });
 io.on("disconnect", (socket) => {
