@@ -54,7 +54,10 @@ io.on("connection", (socket) => {
   });
   socket.on("rpm", (data) => {
     io.to(client_id).emit("hiz", data);
-
+  });
+  socket.on("konum", (data) => {
+    const percentage = (data /175) *100;
+    io.to(client_id).emit("konum", percentage);
   });
 
   socket.on("başlat", () => {
