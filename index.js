@@ -10,7 +10,6 @@ let raspberry_id = "";
 io.on("connection", (socket) => {
   console.log("user connected", socket.id);
   socket.emit("connected", socket.id);
-  socket.emit("ortamSıcaklığı", 1000);
   socket.on("client_id", (data) => {
     client_id = data;
   });
@@ -55,6 +54,7 @@ io.on("connection", (socket) => {
   });
   socket.on("rpm", (data) => {
     io.to(client_id).emit("hiz", data);
+
   });
 
   socket.on("başlat", () => {
