@@ -6,9 +6,10 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 let client_id = "";
 let raspberry_id = "";
-
+let sayı =1
 io.on("connection", (socket) => {
-  console.log("user connected", socket.id);
+  console.log("user connected",sayı, socket.id);
+  sayı++
   socket.emit("connected", socket.id);
   socket.on("client_id", (data) => {
     client_id = data;
@@ -41,6 +42,7 @@ io.on("connection", (socket) => {
     io.to(client_id).emit("lidar", data);
   });
   socket.on("kr", (data) => {
+    console.log("geçilen şerit sayısı", data);
     io.to(client_id).emit("renkSensoru", data);
   });
   socket.on("gx", (data) => {
@@ -53,6 +55,24 @@ io.on("connection", (socket) => {
     io.to(client_id).emit("gz", data);
   });
   socket.on("rpm", (data) => {
+    let data1=""
+    let data2=""
+    let time1=""
+    let time2=""
+    if(!data1){
+      data1=data;
+      time1=Date.now();
+    }
+    if(!data2&&data1){
+      data2=data;
+      time2=Date.now()
+      const acceleration=speedToAcceleration(data1,time1,data2,time2);
+      data1=data2;
+      time1=time2;
+      data2=""+8
+
+      io.to(client_id).emit("ivme", acceleration);
+    }
     io.to(client_id).emit("hiz", data);
   });
   socket.on("konum", (data) => {
@@ -71,7 +91,8 @@ io.on("connection", (socket) => {
 
   socket.on("hazır", () => {
     console.log("hazır");
-    io.to(raspberry_id).emit("hazr", true);
+    console.log(raspberry_id);
+    io.to(raspberry_id).emit("h", true);
   });
   socket.on("durdur", () => {
     console.log("durdur");
@@ -89,3 +110,8 @@ io.on("disconnect", (socket) => {
 server.listen(3000, () => {
   console.log("listening on *:3000");
 });
+
+const speedToAcceleration = (speed1,time1,speed2,time2) => {
+  const acceleration = (speed2 - speed1) / (time2 - time1);
+  return acceleration;
+}
