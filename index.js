@@ -18,27 +18,38 @@ io.on("connection", (socket) => {
     raspberry_id = data;
   });
   socket.on("lbs", (data) => {
-    io.to(client_id).emit("levitasyonSıcaklığı", data);
+    console.log("lbs:", data);
+    let levb = data;
+    levb = parseInt(levb);
+    io.to(client_id).emit("levitasyonSıcaklığı", levb);
+    
   });
   socket.on("os", (data) => {
+    console.log("ortam sıcaklığı:", data);
     io.to(client_id).emit("ortamSıcaklığı", data);
   });
   socket.on("ims", (data) => {
+    console.log("ims:", data);
     io.to(client_id).emit("itkiSıcaklığı", data);
   });
   socket.on("b2", (data) => {
+    console.log("b2:", data);
     io.to(client_id).emit("levitasyonBatarya", data);
   });
   socket.on("b1", (data) => {
+    console.log("b1:", data);
     io.to(client_id).emit("motorSürücüBatarya", data);
   });
   socket.on("b3", (data) => {
+    console.log("b3:", data);
     io.to(client_id).emit("electronicBatarya", data);
   });
   socket.on("b4", (data) => {
+    console.log("b4:", data);
     io.to(client_id).emit("frenBatarya", data);
   });
   socket.on("ld", (data) => {
+    console.log("lidar :", data);
     io.to(client_id).emit("lidar", data);
   });
   socket.on("kr", (data) => {
@@ -46,12 +57,15 @@ io.on("connection", (socket) => {
     io.to(client_id).emit("renkSensoru", data);
   });
   socket.on("gx", (data) => {
+    console.log("gx:", data);
     io.to(client_id).emit("gx", data);
   });
   socket.on("gy", (data) => {
+    console.log("gy:", data);
     io.to(client_id).emit("gy", data);
   });
   socket.on("gz", (data) => {
+    console.log("gz:", data);
     io.to(client_id).emit("gz", data);
   });
   socket.on("rpm", (data) => {
@@ -75,10 +89,14 @@ io.on("connection", (socket) => {
     }
     io.to(client_id).emit("hiz", data);
   });
-  socket.on("konum", (data) => {
+  
+
+  socket.on("k", (data) => {
+    console.log("konum: " ,data)
     const percentage = (data /175) *100;
-    io.to(client_id).emit("konum", percentage);
+    io.to(client_id).emit("konum", parseInt(percentage));
   });
+  
 
   socket.on("başlat", () => {
     console.log("baslat");
